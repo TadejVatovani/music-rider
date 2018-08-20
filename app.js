@@ -30,20 +30,16 @@
  /** Express routing **/
  app.use('/statistics', userController);
 
- /** Server deployment **/
- var port = config.PORT || 3000;
-
-
-app.use((req, res) => {
+ app.use((req, res) => {
     res.status(404);
     res.json({ error: "404 Not found on Backend endpoint" });
-});
+ });
 
-app.use((err, req, res) => {
+ app.use((err, req, res) => {
     console.error(err);
     res.status(err.status || 500);
     res.json({ error: "500 Internal server error" });
-});
+ });
   
   
 module.exports = app;
