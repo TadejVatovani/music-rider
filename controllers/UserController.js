@@ -31,6 +31,11 @@
  *
  */
 
+router.get('/', function(req, res, next) {
+    res.json({message:"Music Rider statistics server"});
+
+});
+
  router.get(routeIdentifier+'/create', function(req, res, next) {
     if (req.query === undefined || req.query.username === undefined || req.query.password === undefined) {
         return res.json({
