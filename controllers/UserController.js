@@ -4,12 +4,8 @@
  
  var router = express.Router();
 /*
- * GET /create
+ * GET 
  *
  */
-
-router.get('/', function(req, res, next) {
-    res.json({message:"Music Rider statistics server"});
-});
 
  module.exports = router;

@@ -1,9 +1,10 @@
 {
   "name": "music-rider-api",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A server for collecting statistics for my game",
   "main": "app.js",
   "scripts": {
+    "start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -13,6 +14,8 @@
   "author": "Tadej Vatovani",
   "license": "MIT",
   "dependencies": {
+    "debug": "~2.6.3",
+    "body-parser": "^1.18.3",
     "express": "4.12.3"
   }
 }
