@@ -92,10 +92,10 @@ router.get('/', async (req, res) => {
 
   try {
     const client = await pool.connect()
-    const res = await pool.query(query)
+    const result = await pool.query(query)
     res.json({
       message: "Succesfully updated data",
-      result: res
+      result: result
     });
     client.release();
   } catch (err) {
