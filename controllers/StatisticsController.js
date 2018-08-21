@@ -38,17 +38,17 @@ router.post('/:id', async (req, res) => {
     const client = await pool.connect()
     const passwordServer = (await pool.query('SELECT password FROM auth')).rows[0].password;
     if (password != passwordServer) {
-      res.json({
+      res.status(403).json({
         error: "Incorrect password"
       })
     }
     const result = await pool.query(query, values)
-    res.json({
+    res.status(200).json({
       message: "Succesfully updated data"
     });
     client.release();
   } catch (err) {
-    res.json({
+    res.status(500).json({
       error: err.message
     });
   }
@@ -79,18 +79,19 @@ router.put('/', async (req, res) => {
     const client = await pool.connect()
     const passwordServer =  (await pool.query('SELECT password FROM auth')).rows[0].password;
     if (password != passwordServer) {
-      res.json({
+      res.status(403).json({
         error: "Incorrect password"
       })
     }
     const result = await pool.query(query, values)
-    res.json({
+    client.release();
+    res.status(200).json({
       message: "Succesfully updated data",
       id: result.rows[0].id
     });
-    client.release();
+    
   } catch (err) {
-    res.json({
+    res.status(500).json({
       error: err.message
     });
   }
@@ -102,12 +103,12 @@ router.get('/ids', async (req, res) => {
   try {
     const client = await pool.connect()
     const result = await pool.query(query)
-    res.json({
+    res.status(200).json({
       result: result.rows
     });
     client.release();
   } catch (err) {
-    res.json({
+    res.status(500).json({
       error: err.message
     });
   }
@@ -124,13 +125,13 @@ router.get('/', async (req, res) => {
   try {
     const client = await pool.connect()
     const result = await pool.query(query)
-    res.json({
+    res.status(200).json({
       message: "Average of statistics",
       result: result.rows[0]
     });
     client.release();
   } catch (err) {
-    res.json({
+    res.status(500).json({
       error: err.message
     });
   }
