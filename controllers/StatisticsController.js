@@ -13,6 +13,7 @@ var router = express.Router();
 router.post('/:id', async (req, res) => {
   let id = req.params.id;
   let statistics = req.body;
+  let password = req.body.password;
 
   const query = `UPDATE  statistics SET
      points_ratio_easy = ($2), points_ratio_normal = ($3), points_ratio_hard = ($4), points_ratio_nightmare = ($5),
@@ -35,6 +36,12 @@ router.post('/:id', async (req, res) => {
 
   try {
     const client = await pool.connect()
+    const passwordServer = await pool.query('SELECT password FROM auth');
+    if (password != passwordServer) {
+      res.json({
+        error: "Incorrect password";
+      })
+    }
     const result = await pool.query(query, values)
     res.json({
       message: "Succesfully updated data"
@@ -49,6 +56,7 @@ router.post('/:id', async (req, res) => {
 
 router.put('/', async (req, res) => {
   let statistics = req.body;
+  let password = req.body.password;
 
   const query = `INSERT INTO statistics(
      points_ratio_easy, points_ratio_normal, points_ratio_hard, points_ratio_nightmare,
@@ -69,10 +77,16 @@ router.put('/', async (req, res) => {
 
   try {
     const client = await pool.connect()
+    const passwordServer = await pool.query('SELECT password FROM auth');
+    if (password != passwordServer) {
+      res.json({
+        error: "Incorrect password";
+      })
+    }
     const result = await pool.query(query, values)
     res.json({
       message: "Succesfully updated data",
-      id: result.rows[0]
+      id: result.rows[0].id
     });
     client.release();
   } catch (err) {
@@ -112,7 +126,7 @@ router.get('/', async (req, res) => {
     const result = await pool.query(query)
     res.json({
       message: "Average of statistics",
-      result: result.rows
+      result: result.rows[0]
     });
     client.release();
   } catch (err) {
