@@ -39,7 +39,7 @@ router.post('/:id', async (req, res) => {
     const passwordServer = await pool.query('SELECT password FROM auth');
     if (password != passwordServer) {
       res.json({
-        error: "Incorrect password";
+        error: "Incorrect password"
       })
     }
     const result = await pool.query(query, values)
@@ -80,7 +80,7 @@ router.put('/', async (req, res) => {
     const passwordServer = await pool.query('SELECT password FROM auth');
     if (password != passwordServer) {
       res.json({
-        error: "Incorrect password";
+        error: "Incorrect password"
       })
     }
     const result = await pool.query(query, values)
