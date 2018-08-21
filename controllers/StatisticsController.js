@@ -94,8 +94,25 @@ router.get('/', async (req, res) => {
     const client = await pool.connect()
     const result = await pool.query(query)
     res.json({
-      message: "Succesfully updated data",
-      result: result.fields
+      message: "Average of statistics",
+      result: result.rows
+    });
+    client.release();
+  } catch (err) {
+    res.json({
+      error: err.message
+    });
+  }
+});
+
+router.get('/allIds', async (req, res) => {
+  const query = `SELECT id FROM statistics`
+
+  try {
+    const client = await pool.connect()
+    const result = await pool.query(query)
+    res.json({
+      result: result.rows
     });
     client.release();
   } catch (err) {
