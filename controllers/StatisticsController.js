@@ -14,15 +14,14 @@ router.post('/:id', async (req, res) => {
   let id = req.params.id;
   let statistics = req.body;
 
-  const query = `INSERT INTO statistics(
-     id,
-     points_ratio_easy, points_ratio_normal, points_ratio_hard, points_ratio_nightmare,
-     bombs_easy, bombs_normal, bombs_hard, bombs_nightmare, 
-     obstacles_easy, obstacles_normal, obstacles_hard, obstacles_nightmare, 
-     ranking_easy, ranking_normal, ranking_hard, ranking_nightmare, 
-     finished, played) 
-     VALUES(
-       $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING id`
+  const query = `UPDATE  statistics SET
+     id = ($1),
+     points_ratio_easy = ($2), points_ratio_normal = ($3), points_ratio_hard = ($4), points_ratio_nightmare = ($5),
+     bombs_easy = ($6), bombs_normal = ($7), bombs_hard = ($8), bombs_nightmare = ($9), 
+     obstacles_easy = ($10), obstacles_normal = ($11), obstacles_hard = ($12), obstacles_nightmare = ($13), 
+     ranking_easy = ($14), ranking_normal = ($15), ranking_hard = ($16), ranking_nightmare = ($17), 
+     finished = ($18), played = ($19)
+     RETURNING id`
 
   const values = [
     id,
