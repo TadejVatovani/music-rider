@@ -72,7 +72,7 @@ router.put('/', async (req, res) => {
     const result = await pool.query(query, values)
     res.json({
       message: "Succesfully updated data",
-      id: result.fields[0]
+      id: result.rows[0]
     });
     client.release();
   } catch (err) {
