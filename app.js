@@ -11,7 +11,7 @@
 
  /** Internal modules **/
  var config = require('./private/config');
- var userController = require('./controllers/UserController');
+ var statisticsController = require('./controllers/StatisticsController');
 
  /** Express setup **/
  var app = express();
@@ -28,7 +28,7 @@
   
 
  /** Express routing **/
- app.use('/statistics', userController);
+ app.use('/statistics', statisticsController);
 
  app.use((req, res) => {
     res.status(404);
