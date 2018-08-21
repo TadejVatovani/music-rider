@@ -57,7 +57,7 @@ router.put('/', async (req, res) => {
      ranking_easy, ranking_normal, ranking_hard, ranking_nightmare, 
      finished,played) 
      VALUES(
-       $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) RETURNING id`
+       $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING id`
 
   const values = [
     statistics.points_ratio_easy, statistics.points_ratio_normal, statistics.points_ratio_hard, statistics.points_ratio_nightmare,
@@ -72,7 +72,7 @@ router.put('/', async (req, res) => {
     const res = await pool.query(query, values)
     res.json({
       message: "Succesfully updated data",
-      id: res.id
+      id: res.fields[0]
     });
     client.release();
   } catch (err) {
