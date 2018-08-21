@@ -36,7 +36,7 @@ router.post('/:id', async (req, res) => {
 
   try {
     const client = await pool.connect()
-    const passwordServer = await pool.query('SELECT password FROM auth');
+    const passwordServer = (await pool.query('SELECT password FROM auth')).rows[0].password;
     if (password != passwordServer) {
       res.json({
         error: "Incorrect password"
@@ -77,7 +77,7 @@ router.put('/', async (req, res) => {
 
   try {
     const client = await pool.connect()
-    const passwordServer = await pool.query('SELECT password FROM auth');
+    const passwordServer =  (await pool.query('SELECT password FROM auth')).rows[0].password;
     if (password != passwordServer) {
       res.json({
         error: "Incorrect password"
