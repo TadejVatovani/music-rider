@@ -35,7 +35,7 @@ router.post('/:id', async (req, res) => {
 
   try {
     const client = await pool.connect()
-    const res = await pool.query(query, values)
+    const result = await pool.query(query, values)
     res.json({
       message: "Succesfully updated data"
     });
@@ -69,10 +69,10 @@ router.put('/', async (req, res) => {
 
   try {
     const client = await pool.connect()
-    const res = await pool.query(query, values)
+    const result = await pool.query(query, values)
     res.json({
       message: "Succesfully updated data",
-      id: res.fields[0]
+      id: result.fields[0]
     });
     client.release();
   } catch (err) {
@@ -84,18 +84,18 @@ router.put('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   const query = `SELECT 
-  AVG(points_ratio_easy), AVG(points_ratio_normal),AVG(points_ratio_hard),AVG(points_ratio_nightmare),
-  AVG(bombs_easy),AVG(bombs_normal),AVG(bombs_hard),AVG(bombs_nightmare),
-  AVG(obstacles_easy),AVG(obstacles_normal),AVG(obstacles_hard),AVG(obstacles_nightmare),
-  AVG(ranking_easy),AVG(ranking_normal),AVG(ranking_hard),AVG(ranking_nightmare),
-  AVG(finished),AVG(played) FROM statistics`
+  AVG(points_ratio_easy) as points_ratio_easy, AVG(points_ratio_normal) as points_ratio_normal,AVG(points_ratio_hard) as points_ratio_hard,AVG(points_ratio_nightmare) as points_ratio_nightmare,
+  AVG(bombs_easy) as bombs_easy,AVG(bombs_normal) as bombs_normal,AVG(bombs_hard) as bombs_hard,AVG(bombs_nightmare) as bombs_nightmare,
+  AVG(obstacles_easy) as obstacles_easy,AVG(obstacles_normal) as obstacles_normal,AVG(obstacles_hard) as obstacles_hard,AVG(obstacles_nightmare) as obstacles_nightmare,
+  AVG(ranking_easy) as ranking_easy,AVG(ranking_normal) as ranking_normal,AVG(ranking_hard) as ranking_hard,AVG(ranking_nightmare) as ranking_nightmare,
+  AVG(finished) as finished,AVG(played) as played FROM statistics`
 
   try {
     const client = await pool.connect()
     const result = await pool.query(query)
     res.json({
       message: "Succesfully updated data",
-      result: result
+      result: result.fields
     });
     client.release();
   } catch (err) {
