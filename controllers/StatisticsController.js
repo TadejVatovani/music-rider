@@ -82,6 +82,23 @@ router.put('/', async (req, res) => {
   }
 });
 
+router.get('/ids', async (req, res) => {
+  const query = `SELECT id FROM statistics`
+
+  try {
+    const client = await pool.connect()
+    const result = await pool.query(query)
+    res.json({
+      result: result.rows
+    });
+    client.release();
+  } catch (err) {
+    res.json({
+      error: err.message
+    });
+  }
+});
+
 router.get('/', async (req, res) => {
   const query = `SELECT 
   AVG(points_ratio_easy) as points_ratio_easy, AVG(points_ratio_normal) as points_ratio_normal,AVG(points_ratio_hard) as points_ratio_hard,AVG(points_ratio_nightmare) as points_ratio_nightmare,
@@ -105,21 +122,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/allIds', async (req, res) => {
-  const query = `SELECT id FROM statistics`
 
-  try {
-    const client = await pool.connect()
-    const result = await pool.query(query)
-    res.json({
-      result: result.rows
-    });
-    client.release();
-  } catch (err) {
-    res.json({
-      error: err.message
-    });
-  }
-});
 
 module.exports = router;
